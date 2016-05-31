@@ -1,0 +1,380 @@
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+
+        <title>泥疙瘩 - 大家一起玩</title>
+        <meta name="description" content="泥疙瘩 JSON 时间戳">
+        <meta name="keywords" content="泥疙瘩 JSON 时间戳 转换">
+
+
+        <script src="/Static/js/jquery-1.10.2.min.js"></script>
+        <script src="/Static/js/laydate/laydate.js"></script>
+       <!--  <script src="/Static/js/jquery.datetimepicker.js"></script>
+        <link rel='stylesheet' href='/Static/css/jquery.datetimepicker.css' /> -->
+
+        <link rel='stylesheet' href='/Static/css/codemirror.css' />
+        <link rel='stylesheet' href='/Static/css/ambiance.css' />
+
+        <script src="/Static/js/json_parse.js"></script>
+        <script src="/Static/js/codemirror.js"></script>
+        <script src="/Static/js/overlay.js"></script>
+        <script src="/Static/js/markdown.js"></script>
+
+        <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+        <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "//hm.baidu.com/hm.js?4418493e45b33679c7a832d6654d6e3e";
+              var s = document.getElementsByTagName("script")[0]; 
+              s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+
+    </head>
+<body style="padding-left:5px;">
+
+<div style="margin:auto;">
+    <h1 style="text-align: center;">泥疙瘩</h1>
+    <div style="float:right;padding-right:50px;font-size:20px;">
+        <span id="loca" style="color:#ff3f3f;"></span>
+        <a href="/book"><label style="font-size:20px;">The WorkerMan 3.x </label></a>
+        <a href="/book2"><label style="font-size:20px;">The GatewayWorker2.0 </label></a>
+        <span id="now_date" style="color:#fc7d28;"></span>
+    </div>
+</div>
+
+
+<ul id="myTab" class="nav nav-tabs">
+   <li class="active"><a href="#home" data-toggle="tab">json转换</a></li>
+   <li><a href="#ios" data-toggle="tab">时间戳转换</a></li>
+   <!-- <li><a href="#md5" data-toggle="tab">MD5转换</a></li> -->
+</ul>
+<div id="myTabContent" class="tab-content">
+   <div class="tab-pane fade in active" id="home">
+
+        <div class="json_form">
+
+            <label>格式化json字符串</label>
+
+            <button name="validate" id="validate" value="Validate" class="btn btn-primary">校验</button>
+            <input name="validate" id="jsonreset" class="btn btn-danger" type="button" value="清空">
+
+            <textarea id="textbox"> </textarea> 
+
+        </div>
+
+        <div class="box w1050">
+
+            <div class="box_title"><h2>JSON介绍</h2></div>
+
+            <div class="box_body">
+
+                <p class="description_p">
+
+                    JSON是一种轻量级的数据交换格式，用于描述数据结构，它基于文本格式，易于解析和生成。
+
+                    </p><p class="description_p" style="font-weight:bold">JSON有两种结构</p>
+
+                    <p class="description_p">json简单说就是javascript中的对象和数组，所以这两种结构就是对象和数组两种结构，通过这两种结构可以表示各种复杂的结构</p>
+
+                    <p class="description_p">&nbsp;&nbsp;&nbsp;&nbsp;1、对象：对象在js中表示为“{}”括起来的内容，数据结构为 {key：value,key：value,...}的键值对的结构，在面向对象的语言中，key为对象的属性，value为对应的属性值，所以很容易理解，取值方法为 对象.key 获取属性值，这个属性值的类型可以是 数字、字符串、数组、对象几种。</p>
+
+                    <p class="description_p">&nbsp;&nbsp;&nbsp;&nbsp;2、数组：数组在js中是中括号“[]”括起来的内容，数据结构为 ["java","javascript","vb",...]，取值方式和所有语言中一样，使用索引获取，字段值的类型可以是 数字、字符串、数组、对象几种。
+
+                    经过对象、数组2种结构就可以组合成复杂的数据结构了。</p>
+
+                <p></p>
+
+            </div>
+
+        </div>
+   </div>
+   <div class="tab-pane fade" id="ios">
+      
+        <div class="date_form">
+            <h4 style="float:right;padding-right:50px;">当前Unix时间戳：<font color="red" id="now_unix"></font></h4>
+            <p>
+                时&nbsp;间&nbsp;戳：&nbsp;<input name="unix_time_1" id="unix_time_1" class="normal_input" type="text" value="" size="30">
+                <input type="submit" id="change_1" class="normal_submit" value="转换" style="margin:20px 20px 10px;">
+                北京时间：<input name="beijing_time_1" id="beijing_time_1" class="normal_input" type="text" value="" size="30">
+            </p>
+            <p>
+                北京时间：<input name="beijing_time_2" id="beijing_time_2" class="normal_input hasDatepicker" type="text" value="" size="30" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                <input type="submit" id="change_2" class="normal_submit" value="转换" style="margin:10px 20px 20px;">
+                时&nbsp;间&nbsp;戳：&nbsp;<input name="unix_time_2" id="unix_time_2" class="normal_input" type="text" value="" size="30">
+            </p>
+
+        </div>
+
+        <div class="box w960">
+                <div class="box_title"><h2>Unix时间戳工具介绍</h2></div>
+                <div class="box_body">
+                    <p class="history_p">
+                    </p><h3>Unix时间戳（Unix timestamp）是一种时间表示方法，定义为从格林威治时间1970年01月01日00时00分00秒起至现在的总秒数。</h3>
+                    <div style="color: #4b4b4b; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; line-height: 19.5px;">
+                        <h3 style="margin: 10px 0px; font-size: 14px; color: #666666; background-image: none; font-family: Verdana; background-repeat: no-repeat no-repeat;padding-left:0">（1）各种编程语言获取当前Unix时间戳方法：</h3>
+                        <table style="border: 1px solid silver; border-collapse: collapse;width:100%">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Java</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">time</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">JavaScript</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Math.round(new Date().getTime()/1000)<br><span style="line-height: 1.5;">getTime()返回数值的单位是毫秒</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Microsoft .NET / C#</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">epoch = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">MySQL</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">SELECT unix_timestamp(now())</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Perl</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">time</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">PHP</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">time()</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">PostgreSQL</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">SELECT extract(epoch FROM now())</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Python</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;"><span style="line-height: 1.5;">先</span>&nbsp;import time&nbsp;<span style="line-height: 1.5;">然后</span>&nbsp;time.time()</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Ruby</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;"><span style="line-height: 1.5;">获取Unix时间戳：</span>Time.now&nbsp;<span style="line-height: 1.5;">或</span>&nbsp;Time.new<br><span style="line-height: 1.5;">显示Unix时间戳：</span>Time.now.to_i</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">SQL Server</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">SELECT DATEDIFF(s, '1970-01-01 00:00:00', GETUTCDATE())</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Unix / Linux</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">date +%s</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">VBScript / ASP</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">DateDiff("s", "01/01/1970 00:00:00", Now())</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">其他操作系统<br><span style="line-height: 1.5;">(如果Perl被安装在系统中)</span></td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;"><span style="line-height: 1.5;">命令行状态：</span>perl -e "print time"</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="color: #4b4b4b; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; line-height: 19.5px;">
+                        <h3 style="margin: 10px 0px; font-size: 14px; color: #666666; background-image: none; font-family: Verdana; background-repeat: no-repeat no-repeat;padding-left:0">（2）各种编程语言中实现Unix时间戳转化为普通时间方法：</h3>
+                        <table style="border: 1px solid silver; border-collapse: collapse;width:100%">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Java</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">String date = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date(<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span>&nbsp;* 1000))</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">JavaScript</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;"><span style="line-height: 1.5;">先</span>&nbsp;var unixTimestamp = new Date(<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span>&nbsp;* 1000)&nbsp;<span style="line-height: 1.5;">然后</span>&nbsp;commonTime = unixTimestamp.toLocaleString()</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Linux</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">date -d @<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">MySQL</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">from_unixtime(<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span>)</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Perl</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;"><span style="line-height: 1.5;">先</span>&nbsp;my $time =&nbsp;<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span>&nbsp;<span style="line-height: 1.5;">然后</span>&nbsp;my ($sec, $min, $hour, $day, $month, $year) = (localtime($time))[0,1,2,3,4,5,6]</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">PHP</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">date('r',&nbsp;<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span>)</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">PostgreSQL</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">SELECT TIMESTAMP WITH TIME ZONE 'epoch' +&nbsp;<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span>) * INTERVAL '1 second';</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Python</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;"><span style="line-height: 1.5;">先</span>&nbsp;import time&nbsp;<span style="line-height: 1.5;">然后</span>&nbsp;time.gmtime(<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span>)</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Ruby</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Time.at(<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span>)</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">SQL Server</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">DATEADD(s,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span>, '1970-01-01 00:00:00')</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">VBScript / ASP</td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">DateAdd("s",&nbsp;<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span>, "01/01/1970 00:00:00")</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">其他操作系统<br><span style="line-height: 1.5;">(如果Perl被安装在系统中)</span></td>
+                                    <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;"><span style="line-height: 1.5;">命令行状态：</span>perl -e "print scalar(localtime(<span style="line-height: 1.5; text-decoration: underline;">Unix timestamp</span>))"</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 style="margin: 10px 0px; font-size: 14px; color: #666666; background-image: none; font-family: Verdana; background-repeat: no-repeat no-repeat;padding-left:0">（3）各种编程语言中实现普通时间转换为Unix时间戳方法：</h3>
+                    <table style="border: 1px solid silver; border-collapse: collapse; color: #4b4b4b; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; line-height: 19.5px;width:100%">
+                        <tbody>
+                            <tr>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Java</td>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">long epoch = new java.text.SimpleDateFormat("<span style="line-height: 1.5; text-decoration: underline;">dd/MM/yyyy HH:mm:ss</span>").parse("01/01/1970 01:00:00");</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">JavaScript</td>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">var commonTime = new Date(Date.UTC(<span style="line-height: 1.5; text-decoration: underline;">year</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">month</span>&nbsp;- 1,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">day</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">hour</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">minute</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">second</span>))</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">MySQL</td>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">SELECT unix_timestamp(<span style="line-height: 1.5; text-decoration: underline;">time</span>)<br><span style="line-height: 1.5;">时间格式: YYYY-MM-DD HH:MM:SS 或 YYMMDD 或 YYYYMMDD</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Perl</td>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;"><span style="line-height: 1.5;">先</span>&nbsp;use Time::Local&nbsp;<span style="line-height: 1.5;">然后</span>&nbsp;my $time = timelocal($sec, $min, $hour, $day, $month, $year);</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">PHP</td>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">mktime(<span style="line-height: 1.5; text-decoration: underline;">hour</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">minute</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">second</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">day</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">month</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">year</span>)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">PostgreSQL</td>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">SELECT extract(epoch FROM date('<span style="line-height: 1.5; text-decoration: underline;">YYYY-MM-DD HH:MM:SS</span>'));</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Python</td>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;"><span style="line-height: 1.5;">先</span>&nbsp;import time&nbsp;<span style="line-height: 1.5;">然后</span>&nbsp;int(time.mktime(time.strptime('<span style="line-height: 1.5; text-decoration: underline;">YYYY-MM-DD HH:MM:SS</span>', '%Y-%m-%d %H:%M:%S')))</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Ruby</td>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Time.local(<span style="line-height: 1.5; text-decoration: underline;">year</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">month</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">day</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">hour</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">minute</span>,&nbsp;<span style="line-height: 1.5; text-decoration: underline;">second</span>)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">SQL Server</td>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">SELECT DATEDIFF(s, '1970-01-01 00:00:00',&nbsp;<span style="line-height: 1.5; text-decoration: underline;">time</span>)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">Unix / Linux</td>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">date +%s -d"Jan 1, 1970 00:00:01"</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">VBScript / ASP</td>
+                                <td style="font-size: 12px; color: #454545; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; border: 1px solid silver; border-collapse: collapse; padding: 3px;">DateDiff("s", "01/01/1970 00:00:00",&nbsp;<span style="line-height: 1.5; text-decoration: underline;">time</span>)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p></p>
+                </div>
+            </div>
+   </div>
+</div>
+
+    
+    
+
+<script>
+    
+    $(function(){
+
+        var editor = CodeMirror.fromTextArea(document.getElementById("textbox"), {
+            mode: 'markdown',
+            lineNumbers: true, 
+            theme: "ambiance",
+            lineWrapping: true,
+        });
+        editor.setSize('99%', 350);
+
+        $('#myTab li:eq(0) a').tab('show');
+
+        $("#validate").click(function(){
+            var jv = editor.getValue();
+            var cq = json_parse(jv);
+            var ss = JSON.stringify(cq,null,'\t');
+            editor.setValue(ss);
+        });
+        
+        $('#jsonreset').click(function (){
+            editor.setValue('');
+            editor.focus();
+        });
+
+        $.getScript('http://php.weather.sina.com.cn/iframe/index/w_cl.php?code=js&day=0&city=&dfc=1&charset=utf-8',function(a){
+            var s="",r="",q="";
+            for(s in window.SWther.w){
+                q=SWther.w[s][0];
+                r={city:s,date:SWther.add.now.split(" ")[0]||"",day_weather:q.s1,night_weather:q.s2,day_temp:q.t1,night_temp:q.t2,day_wind:q.p1,night_wind:q.p2},
+                $("#loca").html(" "+r.city+" "+q.s1+" 温度:"+q.t2+"-"+q.t1+"℃");
+                //alert(q[0])
+            }
+        });
+
+        
+        $("#change_1").click(function(){
+            var timestamp = parseInt($("#unix_time_1").val());
+            var dateObj = new Date(timestamp * 1000);
+            var UnixTimeToDate = dateObj.getFullYear() + '-' + (dateObj.getMonth() + 1) + '-' + dateObj.getDate() + ' ' + dateObj.getHours() + ':' + dateObj.getMinutes() + ':' + dateObj.getSeconds();
+
+            //commonTime = dateObj.toLocaleString();
+            //alert(UnixTimeToDate+"----"+commonTime);
+            $("#beijing_time_1").val(UnixTimeToDate);
+        });
+        
+        $("#change_2").click(function(){
+            var time_stamp = strtotimestamp($("#beijing_time_2").val());
+            time_stamp -=   8*60*60;
+            $("#unix_time_2").val(time_stamp);
+        });
+        
+        setInterval(function(){
+            $("#now_unix").html(Math.round(new Date().getTime()/1000));
+        }, 1000);
+        
+        setInterval(function(){
+            $("#now_date").html(timeStamp2String());
+        }, 1000);
+
+        console.log("搞着玩儿，何必当真！");
+        
+    });
+
+    function timeStamp2String(){
+        var datetime = new Date();
+        //datetime.setTime(time);
+        var year = datetime.getFullYear();
+        var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+        var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+        var hour = datetime.getHours()< 10 ? "0" + datetime.getHours() : datetime.getHours();
+        var minute = datetime.getMinutes()< 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
+        var second = datetime.getSeconds()< 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
+        return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
+    }
+
+    function strtotimestamp(datestr)
+    {
+        var new_str = datestr.replace(/:/g,"-");
+        new_str = new_str.replace(/ /g,"-");
+        var arr = new_str.split("-");
+        var datum = new Date(Date.UTC(arr[0],arr[1]-1,arr[2],arr[3],arr[4],arr[5]));
+
+        return (datum.getTime()/1000);  //为PHP所用
+     }
+
+</script>
+
+</body>
+</html>
